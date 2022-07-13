@@ -7,7 +7,6 @@ function(repoURL="https://github.com/BronzeDeer/hive-bootstrap",revision="HEAD")
 [
   app.new("argo-cd")
   + app.metadata.withNamespace("argocd")
-  + app.metadata.withFinalizersMixin("resources-finalizer.argocd.argoproj.io")
   + app.spec.destination.withNamespace("argocd")
   + app.spec.destination.withServer("https://kubernetes.default.svc")
   + app.spec.withProject("default")
