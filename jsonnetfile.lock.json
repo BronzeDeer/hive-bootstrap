@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "dependencies": [
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/jsonnet-libs/argo-cd-libsonnet.git",
+          "subdir": ""
+        }
+      },
+      "version": "ecbe4af2a5653a47c2c3dfd663778244c7866f15",
+      "sum": "IobxPt6UIINgFBCifd1sCwaWRKXJ44ccOdOZydFPp9o="
+    }
+  ],
+  "legacyImports": false
+}

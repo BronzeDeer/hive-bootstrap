@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  finalizers:
+    - "resources-finalizer.argocd.argoproj.io"
+  name: bootstrap
+  namespace: argocd
+spec:
+  destination:
+    namespace: argocd
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: ./components/
+    repoURL: https://github.com/BronzeDeer/hive-bootstrap
+    targetRevision: HEAD
+    directory:
+      include: "main.jsonnet"
+      jsonnet:
+        tlas:
+          # Make sure components are in lockstep with the bootstrap revision
+          - name: repoURL
+            value: $ARGOCD_APP_SOURCE_REPO_URL
+          - name: revision
+            value: $ARGOCD_APP_REVISION
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
