@@ -4,3 +4,6 @@
 [submodule "components/traefik/submodule"]
 	path = components/traefik/submodule
 	url = https://github.com/traefik/traefik-helm-chart
+[submodule "components/sealed-secrets/submodule"]
+	path = components/sealed-secrets/submodule
+	url = https://github.com/bitnami-labs/sealed-secrets

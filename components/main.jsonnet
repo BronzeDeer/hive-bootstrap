@@ -28,4 +28,10 @@ function(repoURL="https://github.com/BronzeDeer/hive-bootstrap",revision="HEAD")
   baseApp("cert-manager",repoURL,revision)
   + app.spec.destination.withNamespace("cert-manager")
   + app.spec.source.withPath("./components/cert-manager"),
+
+  baseApp("sealed-secrets-controller",repoURL,revision)
+  + app.spec.destination.withNamespace("kube-system")
+  + app.spec.source.withPath("./components/sealed-secrets/submodule/helm/sealed-secrets")
+  + app.spec.syncPolicy.withSyncOptionsMixin("CreateNamespace=true")
+  + app.spec.source.helm.withValueFilesMixin("../../../values.yaml"),
 ]
