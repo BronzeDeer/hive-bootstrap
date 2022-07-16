@@ -1,3 +1,6 @@
 [submodule "components/argo-cd/submodule"]
 	path = components/argocd/submodule
 	url = https://github.com/argoproj/argo-cd.git
+[submodule "components/traefik/submodule"]
+	path = components/traefik/submodule
+	url = https://github.com/traefik/traefik-helm-chart

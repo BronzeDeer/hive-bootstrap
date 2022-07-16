@@ -1,0 +1,26 @@
+
+image:
+  tag: 'v2.8'
+
+deployment:
+  # We deploy via GitOps and therefore already have full revision history, no need for maintaining old replicaSets
+  revisionHistoryLimit: 1
+
+# Disable anonymous datacollection and other phone-home
+globalArguments: []
+
+providers:
+  kubernetesIngress:
+    publishedService:
+      enabled: true
+
+ports:
+  websecure:
+    nodePort: 30443
+  web:
+    nodePort: 30080
+    # Redirect everything on port 80 to 443
+    redirectTo: websecure
+
+service:
+  type: NodePort

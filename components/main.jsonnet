@@ -19,4 +19,9 @@ function(repoURL="https://github.com/BronzeDeer/hive-bootstrap",revision="HEAD")
   + app.spec.source.withPath("./components/argocd")
   + app.spec.source.directory.withInclude("main.jsonnet"),
 
+  baseApp("traefik",repoURL,revision)
+  + app.spec.destination.withNamespace("traefik")
+  + app.spec.source.withPath("./components/traefik/submodule/traefik")
+  + app.spec.source.helm.withValueFilesMixin("../../values.yaml")
+  + app.spec.syncPolicy.withSyncOptionsMixin("CreateNamespace=true")
 ]
