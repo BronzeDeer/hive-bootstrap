@@ -34,4 +34,7 @@ function(repoURL="https://github.com/BronzeDeer/hive-bootstrap",revision="HEAD")
   + app.spec.source.withPath("./components/sealed-secrets/submodule/helm/sealed-secrets")
   + app.spec.syncPolicy.withSyncOptionsMixin("CreateNamespace=true")
   + app.spec.source.helm.withValueFilesMixin("../../../values.yaml"),
+
+  baseApp("credentials",repoURL,revision)
+  + app.spec.source.withPath("./credentials"),
 ]
