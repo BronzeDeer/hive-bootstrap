@@ -11,7 +11,7 @@ local baseApp = function(name,repoURL="https://github.com/BronzeDeer/hive-bootst
   + app.spec.syncPolicy.automated.withSelfHeal(true)
 ;
 
-function(repoURL="https://github.com/BronzeDeer/hive-bootstrap",revision="HEAD")
+function(baseDomain, acmeEmail, repoURL="https://github.com/BronzeDeer/hive-bootstrap",revision="HEAD")
 
 [
   baseApp("argo-cd",repoURL,revision)
@@ -38,4 +38,17 @@ function(repoURL="https://github.com/BronzeDeer/hive-bootstrap",revision="HEAD")
 
   baseApp("credentials",repoURL,revision)
   + app.spec.source.withPath("./credentials"),
+
+  baseApp("tls",repoURL,revision)
+  + app.spec.destination.withNamespace("traefik")
+  + app.spec.source.withPath("./components/tls")
+  + app.spec.source.directory.withInclude("main.jsonnet")
+  + app.spec.source.directory.jsonnet.withTlasMixin({
+    name: "baseDomain",
+    value: baseDomain
+  })
+  + app.spec.source.directory.jsonnet.withTlasMixin({
+    name: "acmeEmail",
+    value: acmeEmail
+  })
 ]

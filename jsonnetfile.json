@@ -9,6 +9,15 @@
         }
       },
       "version": "main"
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/jsonnet-libs/cert-manager-libsonnet.git",
+          "subdir": ""
+        }
+      },
+      "version": "main"
     }
   ],
   "legacyImports": true

@@ -25,8 +25,8 @@ local optionalAwsCreds = {
 
 local container =
   filtered.match[0].spec.template.spec.containers[0]
-  + {envFrom+: [optionalAwsCreds]};
-
+  + {envFrom+: [optionalAwsCreds]}
+  + {args+: ["--issuer-ambient-credentials"]};
 
 [
   filtered.match[0]

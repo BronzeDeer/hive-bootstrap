@@ -10,6 +10,16 @@
       },
       "version": "ecbe4af2a5653a47c2c3dfd663778244c7866f15",
       "sum": "IobxPt6UIINgFBCifd1sCwaWRKXJ44ccOdOZydFPp9o="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/jsonnet-libs/cert-manager-libsonnet.git",
+          "subdir": ""
+        }
+      },
+      "version": "d4270a3802a54431a17f30ec0625ec3349f0de83",
+      "sum": "ix/0hCVwUzglrJg66vSC9/+1rZccUwobGKduix5X9nY="
     }
   ],
   "legacyImports": false

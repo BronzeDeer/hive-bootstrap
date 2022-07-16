@@ -18,6 +18,11 @@ spec:
       include: "main.jsonnet"
       jsonnet:
         tlas:
+          - name: baseDomain
+            value: "example.com"
+          # Needed for Lets encrypt
+          - name: acmeEmail
+            value: dontexist@example.com
           # Make sure components are in lockstep with the bootstrap revision
           - name: repoURL
             value: $ARGOCD_APP_SOURCE_REPO_URL

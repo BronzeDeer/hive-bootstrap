@@ -3,7 +3,7 @@
 local argo_cd = import './components/argocd/main.jsonnet';
 local main = import './main.jsonnet';
 
-function(repoURL="https://github.com/BronzeDeer/hive-bootstrap",revision="HEAD")
+function(baseDomain, acmeEmail, repoURL="https://github.com/BronzeDeer/hive-bootstrap",revision="HEAD")
 
 argo_cd
-+ main(repoURL,revision)
++ main(baseDomain, acmeEmail, repoURL,revision)

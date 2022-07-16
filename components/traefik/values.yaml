@@ -17,6 +17,8 @@ providers:
 ports:
   websecure:
     nodePort: 30443
+    tls:
+      enabled: true
   web:
     nodePort: 30080
     # Redirect everything on port 80 to 443
