@@ -1,19 +1,11 @@
+local util = import '../../lib/util.jsonnet';
+
 local cm = std.parseYaml(importstr './cert-manager.yaml');
 
-# Allows pulling out specific resources from an object stream for further modification
-local findResource = function(list,name=null,apiVersion=null,kind=null){
-  local matchfun = function(resource)(
-    ( name == null || resource.metadata.name == name)
-    && ( apiVersion == null || resource.apiVersion == apiVersion)
-    && ( kind == null || resource.kind == kind)
-  ),
-  match: std.filter(matchfun,list),
-  rest: std.filter(function(resource) !matchfun(resource),list),
-};
 
 #Mount optional aws creds
 
-local filtered = findResource(cm, name="cert-manager", kind="Deployment");
+local filtered = util.findResource(cm, name="cert-manager", kind="Deployment");
 
 # TODO: replace with k8s-libsonnet
 local optionalAwsCreds = {
