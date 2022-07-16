@@ -23,5 +23,9 @@ function(repoURL="https://github.com/BronzeDeer/hive-bootstrap",revision="HEAD")
   + app.spec.destination.withNamespace("traefik")
   + app.spec.source.withPath("./components/traefik/submodule/traefik")
   + app.spec.source.helm.withValueFilesMixin("../../values.yaml")
-  + app.spec.syncPolicy.withSyncOptionsMixin("CreateNamespace=true")
+  + app.spec.syncPolicy.withSyncOptionsMixin("CreateNamespace=true"),
+
+  baseApp("cert-manager",repoURL,revision)
+  + app.spec.destination.withNamespace("cert-manager")
+  + app.spec.source.withPath("./components/cert-manager"),
 ]
