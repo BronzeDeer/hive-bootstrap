@@ -1,5 +1,5 @@
 [submodule "components/argo-cd/submodule"]
-	path = components/argocd/submodule
+	path = components/argocd/core/submodule
 	url = https://github.com/argoproj/argo-cd.git
 [submodule "components/traefik/submodule"]
 	path = components/traefik/submodule

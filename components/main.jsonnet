@@ -16,7 +16,7 @@ function(baseDomain, acmeEmail, repoURL="https://github.com/BronzeDeer/hive-boot
 [
   baseApp("argo-cd",repoURL,revision)
   + app.spec.destination.withNamespace("argocd")
-  + app.spec.source.withPath("./components/argocd")
+  + app.spec.source.withPath("./components/argocd/core")
   + app.spec.source.directory.withInclude("main.jsonnet"),
 
   baseApp("traefik",repoURL,revision)
