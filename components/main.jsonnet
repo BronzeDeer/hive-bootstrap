@@ -27,7 +27,8 @@ function(repoURL="https://github.com/BronzeDeer/hive-bootstrap",revision="HEAD")
 
   baseApp("cert-manager",repoURL,revision)
   + app.spec.destination.withNamespace("cert-manager")
-  + app.spec.source.withPath("./components/cert-manager"),
+  + app.spec.source.withPath("./components/cert-manager")
+  + app.spec.source.directory.withInclude("main.jsonnet"),
 
   baseApp("sealed-secrets-controller",repoURL,revision)
   + app.spec.destination.withNamespace("kube-system")
