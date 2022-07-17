@@ -12,7 +12,12 @@ globalArguments: []
 providers:
   kubernetesIngress:
     publishedService:
-      enabled: true
+      # This doesn't work for non loadbalancer services
+      enabled: false
+
+additionalArguments:
+  # Set canned status response on ingress status to make argocd happy
+  - "--providers.kubernetesingress.ingressendpoint.hostname=nodeport"
 
 ports:
   websecure:
