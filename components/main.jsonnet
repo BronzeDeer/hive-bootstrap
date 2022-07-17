@@ -1,7 +1,7 @@
 local argocd = import '../vendor/github.com/jsonnet-libs/argo-cd-libsonnet/2.3/main.libsonnet';
 local app = argocd.argoproj.v1alpha1.application;
 
-local baseApp = function(name,repoURL="https://github.com/BronzeDeer/hive-bootstrap",revision="HEAD")
+local baseAppNoFinalizer = function(name,repoURL="https://github.com/BronzeDeer/hive-bootstrap",revision="HEAD")
   app.new(name)
   + app.spec.source.withRepoURL(repoURL)
   + app.spec.source.withTargetRevision(revision)
@@ -11,10 +11,16 @@ local baseApp = function(name,repoURL="https://github.com/BronzeDeer/hive-bootst
   + app.spec.syncPolicy.automated.withSelfHeal(true)
 ;
 
+local baseApp = function(name,repoURL="https://github.com/BronzeDeer/hive-bootstrap",revision="HEAD")
+  baseAppNoFinalizer(name,repoURL,revision)
+  + app.metadata.withFinalizersMixin("resources-finalizer.argocd.argoproj.io")
+;
+
 function(baseDomain, acmeEmail, repoURL="https://github.com/BronzeDeer/hive-bootstrap",revision="HEAD")
 
 [
-  baseApp("argo-cd",repoURL,revision)
+  # No finalizer to avoid dead locking
+  baseAppNoFinalizer("argo-cd",repoURL,revision)
   + app.spec.destination.withNamespace("argocd")
   + app.spec.source.withPath("./components/argocd/core")
   + app.spec.source.directory.withInclude("main.jsonnet"),
