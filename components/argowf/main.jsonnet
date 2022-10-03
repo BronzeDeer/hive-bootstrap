@@ -19,7 +19,7 @@ function(baseDomain)[
   argoDep.match[0]
   + dep.spec.template.spec.withContainers([
       argoDep.match[0].spec.template.spec.containers[0]
-      + k.core.v1.container.withArgs(["argo-server","--insecure"])
+      + k.core.v1.container.withArgs(["server","--insecure"])
   ])
   ,
 
