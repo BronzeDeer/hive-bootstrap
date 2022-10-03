@@ -7,3 +7,6 @@
 [submodule "components/sealed-secrets/submodule"]
 	path = components/sealed-secrets/submodule
 	url = https://github.com/bitnami-labs/sealed-secrets
+[submodule "components/argowf/submodule"]
+	path = components/argowf/submodule
+	url = https://github.com/argoproj/argo-workflows.git
