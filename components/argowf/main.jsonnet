@@ -9,6 +9,8 @@ local ingPath = k.networking.v1.httpIngressPath;
 function(baseDomain)
   install
   + [
+    std.parseYaml(importstr './namespace.yaml'),
+
     ing.new("argo-server")
     + ing.metadata.withNamespace("argo")
     + ing.spec.withRules([
