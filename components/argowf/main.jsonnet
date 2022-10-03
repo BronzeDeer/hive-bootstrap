@@ -19,7 +19,10 @@ function(baseDomain)[
   argoDep.match[0]
   + dep.spec.template.spec.withContainers([
       argoDep.match[0].spec.template.spec.containers[0]
+      # Disable self-signed TLS
       + k.core.v1.container.withArgs(["server","--secure=false"])
+      # Adapt readiness probe accordingly
+      + k.core.v1.container.readinessProbe.httpGet.withScheme("HTTP")
   ])
   ,
 
