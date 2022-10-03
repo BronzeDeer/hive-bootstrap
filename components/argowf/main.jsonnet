@@ -17,6 +17,7 @@ function(baseDomain)
         ingRule.withHost("argowf."+baseDomain)
         + ingRule.http.withPaths([
             ingPath.withPath("/")
+            + ingPath.withPathType("Prefix")
             + ingPath.backend.service.withName("argo-server")
             + ingPath.backend.service.port.withName("web")
           ])
