@@ -4,6 +4,8 @@ local k = import '../../lib/k.libsonnet';
 
 local ing = k.networking.v1.ingress
 
-install
-+ [
-]
+function(baseDomain){
+  install
+  + [
+  ]
+}

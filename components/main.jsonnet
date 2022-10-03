@@ -34,6 +34,15 @@ function(baseDomain, acmeEmail, repoURL="https://github.com/BronzeDeer/hive-boot
     value: baseDomain
   }),
 
+  baseApp("argo-wf",repoURL,revision)
+  + app.spec.destination.withNamespace("argo")
+  + app.spec.source.withPath("./components/argowf/")
+  + app.spec.source.directory.withInclude("main.jsonnet")
+  + app.spec.source.directory.jsonnet.withTlasMixin({
+    name: "baseDomain",
+    value: baseDomain
+  }),
+
   baseApp("traefik",repoURL,revision)
   + app.spec.destination.withNamespace("traefik")
   + app.spec.source.withPath("./components/traefik/submodule/traefik")
