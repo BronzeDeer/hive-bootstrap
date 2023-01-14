@@ -12,8 +12,11 @@ local dep = k.apps.v1.deployment;
 local ing = k.networking.v1.ingress;
 local ingRule = k.networking.v1.ingressRule;
 local ingPath = k.networking.v1.httpIngressPath;
+local ingTLS = k.networking.v1.ingressTLS;
 
-function(baseDomain)[
+function(baseDomain)
+  local host= "argowf."+baseDomain;
+  [
   std.parseYaml(importstr './namespace.yaml'),
 
   argoDep.match[0]
@@ -29,7 +32,7 @@ function(baseDomain)[
   ing.new("argo-server")
   + ing.metadata.withNamespace("argo")
   + ing.spec.withRules([
-      ingRule.withHost("argowf."+baseDomain)
+      ingRule.withHost(host)
       + ingRule.http.withPaths([
           ingPath.withPath("/")
           + ingPath.withPathType("Prefix")
@@ -37,6 +40,10 @@ function(baseDomain)[
           + ingPath.backend.service.port.withName("web")
         ])
   ])
+  + ing.spec.withTls([
+      ingTLS.withHosts([host])
+  ])
+  ,
 ]
 // Remove cert-manager resource not needed if we disable self-signed cert
 + util.findResource(argoDep.rest,apiVersion="cert-manager.io/v1").rest
