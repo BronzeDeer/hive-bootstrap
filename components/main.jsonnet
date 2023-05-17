@@ -80,5 +80,18 @@ function(baseDomain, acmeEmail, repoURL="https://github.com/BronzeDeer/hive-boot
   + app.spec.destination.withNamespace("testkube")
   + app.spec.source.withPath('./vendor/github.com/kubeshop/helm-charts/charts/testkube')
   + app.spec.source.helm.withValueFiles('../../../../../../components/testkube/values.yaml')
+  + app.spec.syncPolicy.withSyncOptionsMixin('CreateNamespace=true'),
+
+  baseApp('keycloak-operator-new', repoURL, revision)
+  + app.spec.destination.withNamespace('keycloak')
+  + app.spec.source.withPath('./components/keycloak-operator/new/')
+  + app.spec.source.directory.withInclude('main.jsonnet')
   + app.spec.syncPolicy.withSyncOptionsMixin('CreateNamespace=true')
+  ,
+
+  baseApp('keycloak-operator-legacy', repoURL, revision)
+  + app.spec.destination.withNamespace('keycloak')
+  + app.spec.source.withPath('./components/keycloak-operator/legacy/')
+  + app.spec.source.directory.withInclude('main.jsonnet')
+  ,
 ]

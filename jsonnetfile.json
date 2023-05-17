@@ -31,6 +31,24 @@
     {
       "source": {
         "git": {
+          "remote": "https://github.com/keycloak/keycloak-k8s-resources.git",
+          "subdir": "kubernetes"
+        }
+      },
+      "version": "21.1.1"
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/keycloak/keycloak-realm-operator.git",
+          "subdir": "deploy"
+        }
+      },
+      "version": "1.0.0"
+    },
+    {
+      "source": {
+        "git": {
           "remote": "https://github.com/kubeshop/helm-charts.git",
           "subdir": "charts"
         }
