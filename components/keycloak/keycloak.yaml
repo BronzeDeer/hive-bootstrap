@@ -1,0 +1,13 @@
+apiVersion: k8s.keycloak.org/v2alpha1
+kind: Keycloak
+
+metadata:
+  name: main
+
+spec:
+  http:
+    # Allow for edge termination (and service mesh mTLS later)
+    # This is ugly, we are relying on the fact that traefik will use a matching default cert even if the ingress doesn't specify tls for this domain
+    httpEnabled: true
+  hostname:
+    strict: false

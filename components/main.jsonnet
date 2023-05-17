@@ -82,6 +82,10 @@ function(baseDomain, acmeEmail, repoURL="https://github.com/BronzeDeer/hive-boot
   + app.spec.source.helm.withValueFiles('../../../../../../components/testkube/values.yaml')
   + app.spec.syncPolicy.withSyncOptionsMixin('CreateNamespace=true'),
 
+
+// To simplify the RBAC we deploy the operators and the keycloak into the same namespace
+// This is not the best way to do it, refer to comment in keycloak-operator/new/main.jsonnet
+
   baseApp('keycloak-operator-new', repoURL, revision)
   + app.spec.destination.withNamespace('keycloak')
   + app.spec.source.withPath('./components/keycloak-operator/new/')
@@ -94,4 +98,10 @@ function(baseDomain, acmeEmail, repoURL="https://github.com/BronzeDeer/hive-boot
   + app.spec.source.withPath('./components/keycloak-operator/legacy/')
   + app.spec.source.directory.withInclude('main.jsonnet')
   ,
+
+  baseApp('keycloak', repoURL, revision)
+  + app.spec.destination.withNamespace('keycloak')
+  + app.spec.source.withPath('./components/keycloak/')
+  + app.spec.source.directory.withInclude('main.jsonnet')
+  + app.spec.syncPolicy.withSyncOptionsMixin('CreateNamespace=true')
 ]
