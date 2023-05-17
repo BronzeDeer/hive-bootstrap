@@ -1,0 +1,79 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "kusk-gateway-api.serviceAccountName" . }}
+rules:
+- apiGroups:
+  - gateway.kusk.io
+  resources:
+  - apis
+  verbs:
+  - create
+  - get
+  - list
+  - watch
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - gateway.kusk.io
+  resources:
+  - apis/status
+  verbs:
+  - get
+- apiGroups:
+  - gateway.kusk.io
+  resources:
+  - envoyfleet
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - gateway.kusk.io
+  resources:
+  - envoyfleet/status
+  verbs:
+  - get
+- apiGroups:
+  - gateway.kusk.io
+  resources:
+  - staticroutes
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - gateway.kusk.io
+  resources:
+  - staticroutes/status
+  verbs:
+  - get
+- apiGroups:
+    - "apps"
+  resources:
+    - services
+  verbs:
+    - get
+    - list
+    - watch
+- apiGroups:
+    - ""
+  resources:
+    - secrets
+    - services
+    - namespaces
+    - pods
+    - pods/log
+  verbs:
+    - get
+    - list
+    - watch

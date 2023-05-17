@@ -1,0 +1,97 @@
+{{- if .Values.oauth2.enabled -}}
+apiVersion: {{ include "global.capabilities.deployment.apiVersion" . }}
+kind: Deployment
+metadata:
+  name: {{ .Values.oauth2.name }}
+  labels: {{- include "testkube-oauth2.selectorLabels" . | nindent 4 }}
+    {{- if .Values.oauth2.labels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.oauth2.labels "context" $ ) | nindent 4 }}
+    {{- end }}
+    {{- if .Values.global.labels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
+    {{- end }}
+    {{- if .Values.global.annotations }}
+  annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
+    {{- end }}
+    {{- if .Values.oauth2.annotations }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.oauth2.annotations "context" $ ) | nindent 4 }}
+    {{- end }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: 1
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "testkube-oauth2.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "testkube-oauth2.selectorLabels" . | nindent 8 }}
+        {{- if .Values.oauth2.podLabels }}
+        {{- include "global.tplvalues.render" ( dict "value" .Values.oauth2.podLabels "context" $ ) | nindent 8 }}
+        {{- end }}
+      {{- if .Values.oauth2.podAnnotations }}
+      annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.oauth2.podAnnotations "context" $ ) | nindent 8 }}
+      {{- end }}
+    spec:
+      {{- include "global.images.renderPullSecrets" . | nindent 6 }}
+      containers:
+      - args:
+        {{- if .Values.oauth2.args }}
+        {{- range .Values.oauth2.args }}
+        - {{ . }}
+        {{- end }}  
+        {{- else }}
+        - --provider=github
+        - --email-domain=*
+        - --upstream=file:///dev/null
+        - --show-debug-on-error=true
+        {{- end }}
+        # Register a new application
+        # https://github.com/settings/applications/new
+        env:
+        - name: OAUTH2_PROXY_CLIENT_ID
+          value: "{{ .Values.oauth2.env.clientId }}"
+        - name: OAUTH2_PROXY_CLIENT_SECRET
+          value: "{{ .Values.oauth2.env.clientSecret }}"
+        - name: OAUTH2_PROXY_GITHUB_ORG
+          value: "{{ .Values.oauth2.env.githubOrg }}"
+        # docker run -ti --rm python:3-alpine python -c 'import secrets,base64; print(base64.b64encode(base64.b64encode(secrets.token_bytes(16))));'
+        - name: OAUTH2_PROXY_COOKIE_SECRET
+          value: "{{ .Values.oauth2.env.cookieSecret }}"
+        - name: OAUTH2_PROXY_HTTP_ADDRESS
+          value: "0.0.0.0:{{ .Values.oauth2.port }}"
+        - name: OAUTH2_PROXY_COOKIE_SECURE
+          value: "{{ .Values.oauth2.env.cookieSecure }}"
+        - name: OAUTH2_PROXY_REDIRECT_URL  
+          value: "{{ .Values.oauth2.env.redirectUrl }}"
+        {{- if .Values.oauth2.extraEnvVars }}
+        {{ include "global.tplvalues.render" (dict "value" .Values.oauth2.extraEnvVars "context" $) | nindent 8 | trim }}
+        {{- end }}
+        image: {{ include "global.images.image" (dict "imageRoot" .Values.oauth2.image "global" .Values.global) }}
+        imagePullPolicy: {{ .Values.oauth2.image.pullPolicy }}
+        name: {{ .Values.oauth2.name }}
+        ports:
+        - containerPort: {{ .Values.oauth2.port }}
+          protocol: TCP
+        {{- with .Values.oauth2.volumeMounts }}
+        volumeMounts:
+          {{- toYaml . | nindent 10 }}
+          {{- end }}
+      {{- with .Values.oauth2.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.oauth2.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.oauth2.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.oauth2.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}

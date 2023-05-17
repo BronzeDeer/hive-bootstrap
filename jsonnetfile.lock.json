@@ -30,6 +30,16 @@
       },
       "version": "f9e782871e7a4d926cf02c685607435a826e877c",
       "sum": "Z325DqpDwWuYbrxZY3oY4LGqYaXuIC7KgjCnVGvbxHo="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/kubeshop/helm-charts.git",
+          "subdir": "charts"
+        }
+      },
+      "version": "7acbd7b704f2bbb7d94bf1ad91d9a16cc1aade65",
+      "sum": "N8sI4dxqLMaNCyxNf/Fju5Ju448tvhJvlTRzyWv5D7w="
     }
   ],
   "legacyImports": false

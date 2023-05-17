@@ -1,0 +1,2 @@
+kubectl --namespace {{ .Values.envoyfleet.namespace }} port-forward svc/{{ .Values.envoyfleet.name }} 8080:80
+To get the list of currently deployed APIs: curl localhost:8080/api/apis

@@ -27,6 +27,15 @@
         }
       },
       "version": "main"
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/kubeshop/helm-charts.git",
+          "subdir": "charts"
+        }
+      },
+      "version": "release-v1.11.12"
     }
   ],
   "legacyImports": false

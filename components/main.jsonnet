@@ -74,5 +74,11 @@ function(baseDomain, acmeEmail, repoURL="https://github.com/BronzeDeer/hive-boot
   + app.spec.source.directory.jsonnet.withTlasMixin({
     name: "acmeEmail",
     value: acmeEmail
-  })
+  }),
+
+  baseApp("testkube", repoURL, revision)
+  + app.spec.destination.withNamespace("testkube")
+  + app.spec.source.withPath('./vendor/github.com/kubeshop/helm-charts/charts/testkube')
+  + app.spec.source.helm.withValueFiles('../../../../../../components/testkube/values.yaml')
+  + app.spec.syncPolicy.withSyncOptionsMixin('CreateNamespace=true')
 ]
