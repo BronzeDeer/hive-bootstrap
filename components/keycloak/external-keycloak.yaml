@@ -2,6 +2,8 @@ apiVersion: legacy.k8s.keycloak.org/v1alpha1
 kind: ExternalKeycloak
 metadata:
   name: main
+  labels:
+    keycloak.bronze-deer.de/name: main
 spec:
   contextRoot: "/"
   url: REPLACEME

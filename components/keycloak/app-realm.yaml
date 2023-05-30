@@ -3,6 +3,9 @@ kind: KeycloakRealm
 metadata:
   name: app-realm
 spec:
+  instanceSelector:
+    matchLabels:
+      keycloak.bronze-deer.de/name: main
   realm:
     realm: app-realm
     displayName: "App Realm"
