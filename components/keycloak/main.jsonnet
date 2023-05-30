@@ -10,7 +10,7 @@ local hostname = "keycloak"+baseURL;
       },
     },
   },
-    std.parseYaml(importstr './keycloak.yaml')
+    std.parseYaml(importstr './external-keycloak.yaml')
   + {
     spec+: {
       url: hostname,
