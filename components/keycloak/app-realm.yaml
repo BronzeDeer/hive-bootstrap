@@ -4,4 +4,5 @@ metadata:
   name: app-realm
 spec:
   realm:
+    realm: app-realm
     displayName: "App Realm"
