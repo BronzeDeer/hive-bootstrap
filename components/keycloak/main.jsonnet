@@ -1,12 +1,19 @@
 // TODO: from TLAs
 local baseURL = ".hive.bronze-deer.de";
+local hostname = "keycloak"+baseURL;
 [
   std.parseYaml(importstr './keycloak.yaml')
   + {
     spec+: {
       hostname+:{
-        hostname: "keycloak"+baseURL,
+        hostname: hostname,
       },
     },
+  },
+    std.parseYaml(importstr './keycloak.yaml')
+  + {
+    spec+: {
+      url: hostname,
+      },
   },
 ]
